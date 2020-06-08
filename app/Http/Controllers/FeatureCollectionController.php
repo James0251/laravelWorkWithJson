@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class FeatureCollectionController extends Controller
 {
     public function index(){
-        return "Hello, World";
+        $data = DB::table('feature_collections')->get();
+        return $data;
     }
 }

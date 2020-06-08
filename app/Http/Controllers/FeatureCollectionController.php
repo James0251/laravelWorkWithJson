@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\DB;
 class FeatureCollectionController extends Controller
 {
     public function index(){
+        $arr = [
+            'type' => 'FeatureCollection',
+            'features' => []
+        ];
         $dates = DB::table('feature_collections')->get();
         foreach ($dates as $data){
             $coordinates = explode(',', $data->coordinates);
@@ -19,6 +23,16 @@ class FeatureCollectionController extends Controller
             ];
             $array[] = $arr1;
         }
-        print_r($array);
+        $arr['features'] = $array;
+        $json = json_encode($arr, JSON_UNESCAPED_UNICODE);
+
+        $file = fopen('data.json', 'w');
+        // и записываем туда данные
+        $write = fwrite($file,$json);
+        // проверяем успешность выполнения операции
+        if($write) return "Данные успешно записаны!<br>";
+        else return "Не удалось записать данные!<br>";
+        //закрываем файл
+        fclose($file);
     }
 }

@@ -8,6 +8,17 @@
     <title>Upload File</title>
 </head>
 <body>
+
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <form action="{{ route('upload_file') }}" method="post" enctype="multipart/form-data">
         @csrf
         <input type="file" name="images[]" multiple>

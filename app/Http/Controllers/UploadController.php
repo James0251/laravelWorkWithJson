@@ -13,14 +13,30 @@ class UploadController extends Controller
 
     public function upload(Request $request){
 //        dd($request->file('images'));
-        $max_size = 1024;
+//        $rules = [];
+        $max_size = 1000000;
+//        foreach($request->file('images') as $key => $val){
+//            $rules['image.'.$key] = "['required|mimes:bmp,png,jpg']|max:{$max_size}";
+////            $rules['image'] = 'max:'.$max_size;
+//        }
+//        dd($rules);
+
+
+
+
         $request->validate([
-            'images' => 'required|max:'.$max_size,
+            'images' => 'required',
             'images.*' => 'mimes:bmp,png,jpg',
             ]);
         foreach ($request->file() as $file){
             foreach ($file as $f){
-                $f->move(storage_path('images'), time().'_'.$f->getClientOriginalName());
+//                dd($f);
+                $size[] = $f->getSize();
+                $sum = array_sum($size);
+                if ($sum <= $max_size){
+                    $f->move(storage_path('images'), time().'_'.$f->getClientOriginalName());
+                }else{echo "Error";}
+
             }
         }
         return "Успех";

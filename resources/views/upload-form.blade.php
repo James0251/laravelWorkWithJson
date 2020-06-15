@@ -9,6 +9,7 @@
 </head>
 <body>
 
+
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
@@ -24,5 +25,12 @@
         <input type="file" name="images[]" multiple>
         <button type="submit">Загрузить</button>
     </form>
+    <br>
+
+    @if (session('status'))
+        <div class="alert alert-success">
+            {{ session('status') }}
+        </div>
+    @endif
 </body>
 </html>
